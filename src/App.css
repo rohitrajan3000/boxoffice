@@ -1,0 +1,28 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:wght@100;300;400;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,500;6..12,600&display=swap');
+
+
+.auth-container{
+  background-color: #f54236;
+  width: 100%;
+  height: 100vh;
+
+}
+.inner-Container{
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Login-bt{
+  background-color: #e05827  !important;
+  border: none;
+  width: 100%;
+}
+.title{
+  font-family: 'Bebas Neue';
+  color: white;
+  font-size: 4rem;
+}
