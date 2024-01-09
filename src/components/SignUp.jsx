@@ -1,4 +1,5 @@
 
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { Container, Form } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
@@ -6,25 +7,36 @@ import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth } from '../firebase';
 
+
+import { useNavigate } from "react-router-dom";
 import LoginImg from '../assets/Logo.png';
 
 export default function SignUp() {
+    const navigate = useNavigate()
 
 
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
     async function handelLogin() {
-        createUserWithEmailAndPassword(auth , email , password ).then((userCredential) => {
-            console.log(userCredential)
-            
+
+        createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
+            const user = userCredential.user;
+
         })
+        navigate('/home')
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // ..
+            });
+
+
 
     }
-    
+
 
 
     return (
@@ -36,7 +48,7 @@ export default function SignUp() {
                     <Col className="inner-Container">
                         <h1 className="title">BOX OFFICE</h1>
 
-                        <Card style={{ width: '25rem', padding: 25 }}  >
+                        <Card className="log" style={{ width: '25rem', padding: 25 }}  >
                             <Card.Body>
                                 <Form>
                                     <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -45,18 +57,19 @@ export default function SignUp() {
 
                                     </Form.Group>
 
+
                                     <Form.Group className="mb-3" controlId="formBasicPassword">
                                         <Form.Label>Password</Form.Label>
-                                        <Form.Control type="current-password" placeholder="Password" onChange={(e) => setPassword(e.currentTarget.value)} />
+                                        <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.currentTarget.value)} />
                                     </Form.Group>
 
 
 
                                     <Button variant="primary" type="submit" className="Login-bt" onClick={handelLogin}>
-                                        SignUo
+                                        SignUp
                                     </Button >
                                     <div style={{ display: 'flex', justifyContent: 'center', marginTop: 25 }}>
-                                        Already have an account ? <a href="/login">Login</a></div>
+                                        Already have an account ? <a style={{ color: 'white' }} href="/login">Login</a></div>
                                 </Form>
                             </Card.Body>
                         </Card>

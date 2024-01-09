@@ -1,4 +1,5 @@
 
+import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { Container, Form } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
@@ -6,8 +7,8 @@ import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth } from '../firebase';
+
 
 import { useNavigate } from "react-router-dom";
 import LoginImg from '../assets/Logo.png';
@@ -21,15 +22,22 @@ export default function SignUp() {
     const navigate = useNavigate();
 
     async function handelLogin() {
-        createUserWithEmailAndPassword(auth , email , password ).then((userCreds) => {
-            console.log(userCreds.user)
-
+       
+        signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+            const user = userCredential.user;
             
         })
         navigate('/home')
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // ..
+            });
+
+        
 
     }
-    
+
 
 
     return (
@@ -50,18 +58,19 @@ export default function SignUp() {
 
                                     </Form.Group>
 
+
                                     <Form.Group className="mb-3" controlId="formBasicPassword">
                                         <Form.Label>Password</Form.Label>
-                                        <Form.Control type="current-password" placeholder="Password" onChange={(e) => setPassword(e.currentTarget.value)} />
+                                        <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.currentTarget.value)} />
                                     </Form.Group>
 
 
 
-                                    <Button variant="primary" type="submit" className="Login-bt" onClick={handelLogin}>
-                                        SignUo
+                                    <Button variant="primary" type="onSubmit" className="Login-bt" onClick={handelLogin}>
+                                        LogIn
                                     </Button >
                                     <div style={{ display: 'flex', justifyContent: 'center', marginTop: 25 }}>
-                                        Already have an account ? <a href="/home">Login</a></div>
+                                        Join The Club ? <a style={{ color: 'white' }} href="/signup"> SignUp</a></div>
                                 </Form>
                             </Card.Body>
                         </Card>
