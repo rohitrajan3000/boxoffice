@@ -1,6 +1,6 @@
 .containers {
   display: flex;
-    height: 400px; /* Set a fixed height for the scrolling section */
+     /* Set a fixed height for the scrolling section */
     overflow-y: scroll; /* Enable vertical scrolling */
      /* Optional: Add a border for visibility */
   }
