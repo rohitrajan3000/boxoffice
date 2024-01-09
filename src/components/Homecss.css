@@ -1,23 +1,21 @@
 .containers {
   display: flex;
-     /* Set a fixed height for the scrolling section */
-    overflow-y: scroll; /* Enable vertical scrolling */
-     /* Optional: Add a border for visibility */
+    
+    overflow-y: scroll; 
+     
   }
   
-  /* Optional: To hide default scrollbar on certain browsers */
+ 
   .containers::-webkit-scrollbar {
     display: none;
   }
 
   .containersss {
     
-      height: 400px; /* Set a fixed height for the scrolling section */
-      overflow-y: scroll; /* Enable vertical scrolling */
-       /* Optional: Add a border for visibility */
+      overflow-y: scroll; 
     }
     
-    /* Optional: To hide default scrollbar on certain browsers */
+ 
     .containersss::-webkit-scrollbar {
       display: none;
     }

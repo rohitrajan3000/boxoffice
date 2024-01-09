@@ -25,9 +25,9 @@ export default function Home() {
    
     return (
         <div>
-            <Navbar style={{ backgroundColor: '#5C469C' }}>
+            <Navbar style={{ backgroundColor: '#5C469C'}}>
                 <Container >
-                    <Navbar.Brand href="#home">
+                    <Navbar.Brand href="#home" style={{color: "white",fontFamily:'Bebas Neue', fontSize:'30px'}} >
                         <img
                             alt=""
                             src={logoimg}
@@ -43,7 +43,7 @@ export default function Home() {
             </Navbar>
             <Row>
                 <Container style={{ width: '7%',height:'90vh', backgroundColor: '#0F2167', color: 'white', padding: '20px' }}>
-                    <Button style={{ marginBottom: '10px', backgroundColor: '#D4ADFC' }}><img src={homeimg} style={{ height: '30px' }} /></Button>
+                    <Button style={{ marginBottom: '10px', backgroundColor: '#512B81' }}><img src={homeimg} style={{ height: '30px' }} /></Button>
                     <Button style={{ marginBottom: '10px', backgroundColor: '#D4ADFC' }}><img src={profileimg} style={{ height: '30px' }} /></Button>
                     <Button style={{ marginBottom: '10px', backgroundColor: '#D4ADFC' }}><img src={reviewimg} style={{ height: '30px' }} /></Button>
                 </Container>

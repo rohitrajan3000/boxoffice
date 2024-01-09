@@ -41,7 +41,7 @@ export default function SignUp() {
                     <Col className="inner-Container">
                         <h1 className="title">BOX OFFICE</h1>
 
-                        <Card style={{ width: '25rem', padding: 25 }}  >
+                        <Card className="log" style={{ width: '25rem', padding: 25 }}  >
                             <Card.Body>
                                 <Form>
                                     <Form.Group className="mb-3" controlId="formBasicEmail">

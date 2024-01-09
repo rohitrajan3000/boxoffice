@@ -1,54 +1,61 @@
-import { default as React, useState } from "react";
-import { Card } from 'react-bootstrap';
-import { useNavigate } from "react-router-dom";
-import '../components/Homecss.css';
-
-import axios from "axios";
-import { useEffect } from "react";
+import { default as React, useEffect, useState } from "react";
+import { Card } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 
 
-const MOVIE_API = 'https://api.themoviedb.org/3/movie/now_playing?api_key=dd2e28b6c8ff10c5a8a9521272e2cad9&language=en-US&page=1';
 const IMAGE_API = 'https://image.tmdb.org/t/p/w500/';
 
+export default function Similarm() {
 
-export default function Similarm(){
-    const [movies, setMovies] = useState([]);
-    const navigate = useNavigate();
+    const [casts, setCasts] = useState([]);
+    const location = useLocation();
+    const { id } = location.state;
+
     useEffect(() => {
-        axios.get(MOVIE_API).then((resp) => {
-            setMovies(resp.data.results)
-        })
+        const apiKey = 'dd2e28b6c8ff10c5a8a9521272e2cad9'; // Replace with your TMDb API key
 
+
+        fetch(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=${apiKey}&language=en-US&page=1`)
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then((data) => {
+                setCasts(data.results);
+            })
+            .catch((error) => {
+                console.error('There was a problem fetching the data: ', error);
+            });
     }, []);
-    const clickhandel = (movie) => {
+    return (
 
-        navigate('/Movie/' + movie.id, { state: movie });
+        <div >
+            <h2 style={{marginTop:'20px'}}>Similar Movies</h2>
+            <div className="containers">
+            {casts.map((member) => (
+                     <div key={member.id} >
 
-    }
-    return(
-        <div>
-             <div>
-                        <h3>Similar Movies</h3>
-                        <div className="containers">
-                            {movies.map(movie => {
+                     <Card  style={{ width: '11rem', padding: 2, height: 330, margin:4, backgroundColor: '#0F2167', color: 'white' }}>
 
-                                const id = movie.id;
-                                return (
-                                    <div key={movie.id} >
+                     <Card.Img src={IMAGE_API + member.poster_path} height={240} ></Card.Img>
+                        
+                         <Card.Title>{member.title}</Card.Title>
 
-                                        <Card onClick={() => clickhandel(movie)} style={{ width: '12rem', padding: 5, height: 330, margin: 10, backgroundColor: '#0F2167', color: 'white' }}>
+                     </Card>
 
-                                            <Card.Img src={IMAGE_API + movie.poster_path} height={250} ></Card.Img>
-                                            <Card.Title>{movie.title}</Card.Title>
+                 </div>
 
-                                        </Card>
+                   
+                ))}
 
-                                    </div>
-                                )
-                            })}
-                        </div>
+            </div>
+            
+                
 
-                    </div>
+
         </div>
+        
     )
 }
