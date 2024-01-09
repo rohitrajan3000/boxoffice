@@ -1,29 +1,24 @@
-import React from "react";
-import { Button, Row } from 'react-bootstrap';
+import { default as React } from "react";
+import { Button, Col, Row } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
+import { useLocation } from "react-router-dom";
 import profileimg from '../assets/account.png';
 import homeimg from '../assets/home.png';
 import reviewimg from '../assets/movie-reel.png';
 import '../components/Homecss.css';
 
 import logoimg from '../assets/logo.png';
-import NowPlaying from "./NowPlaying";
-import Popular from "./Popular";
-import Toprated from "./Toprated";
-import Upcoming from "./Upcoming";
+const IMAGE_API = 'https://image.tmdb.org/t/p/w500/';
 
 
 
+export default function Movie(){
+    const location = useLocation();
+    const {title,overview,poster_path,credits}= location.state;
 
-
-
-
-
-export default function Home() {
-
-   
-    return (
+    console.log(credits);
+    return(
         <div>
             <Navbar style={{ backgroundColor: '#5C469C' }}>
                 <Container >
@@ -48,17 +43,26 @@ export default function Home() {
                     <Button style={{ marginBottom: '10px', backgroundColor: '#D4ADFC' }}><img src={reviewimg} style={{ height: '30px' }} /></Button>
                 </Container>
                 <Container className="containersss"   style={{ width: '93%',height:'90vh',  backgroundColor: '#200E3A', color: 'white', padding: '20px' }}>
-                   <NowPlaying/>
-                   <Toprated/>
-                   <Upcoming/>
-                   <Popular/>
+                 <Row>
+                    <Col style={{margin:'10px'}} >
+                    <img  src={IMAGE_API + poster_path} />
+                    <h1 style={{marginTop:'20px',marginBottom:'20px'}}>{title}</h1>
+                    <div>
+                        {overview}
+                    </div>
+                    <h1>{credits}</h1>
+                    <Button style={{marginTop:'20px'}}>Post Review</Button>
+                    <h4 style={{marginTop:'20px'}}>Cast & Crew</h4>
+                    
+                    </Col>
+                    <Col>
+                    </Col>
+                 </Row>
                   
                 
 
                 </Container>
             </Row>
-
-
         </div>
     )
 }
