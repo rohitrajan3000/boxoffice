@@ -23,11 +23,12 @@ export default function SignUp() {
 
     async function handelLogin() {
        
-        signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+         signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
             const user = userCredential.user;
             
         })
         navigate('/home')
+       
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;

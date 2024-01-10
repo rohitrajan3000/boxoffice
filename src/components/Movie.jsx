@@ -10,6 +10,7 @@ import '../components/Homecss.css';
 
 import { useState } from 'react';
 import { Modal } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
 import logoimg from '../assets/logo.png';
 import Cast from "./Cast";
 import Similarm from "./Similarm";
@@ -23,11 +24,19 @@ const IMAGE_API = 'https://image.tmdb.org/t/p/w500/';
 
 export default function Movie() {
     const location = useLocation();
-    const { title, overview, poster_path, id } = location.state;
+    const { title, overview, poster_path, id,release_date } = location.state;
     const [showDialog, setShowDialog] = useState(false);
+
+    const navigate = useNavigate()
 
     const handleClose = () => setShowDialog(false);
     const handleShow = () => setShowDialog(true);
+
+    const clickhandel=() => {
+
+        navigate('/Home');
+
+    }
 
 
 
@@ -55,7 +64,7 @@ export default function Movie() {
             </Navbar>
             <Row>
                 <Container style={{ width: '7%', height: '90vh', backgroundColor: '#0F2167', color: 'white', padding: '20px' }}>
-                    <Button style={{ marginBottom: '10px', backgroundColor: '#512B81' }}><img src={homeimg} style={{ height: '30px' }} /></Button>
+                    <Button onClick={clickhandel} style={{ marginBottom: '10px', backgroundColor: '#512B81' }}><img src={homeimg} style={{ height: '30px' }} /></Button>
                     <Button style={{ marginBottom: '10px', backgroundColor: '#D4ADFC' }}><img src={profileimg} style={{ height: '30px' }} /></Button>
                     <Button style={{ marginBottom: '10px', backgroundColor: '#D4ADFC' }}><img src={reviewimg} style={{ height: '30px' }} /></Button>
                 </Container>
@@ -66,6 +75,8 @@ export default function Movie() {
                             <h1 style={{ marginTop: '20px', marginBottom: '20px' }}>{title}</h1>
                             <div>
                                 {overview}
+                                <h6 style={{marginTop:'10px'}}>Relese date : {release_date}</h6>
+                                
                             </div>
 
                             <Button onClick={handleShow} style={{ marginTop: '20px', marginBottom: '20px' }}>Post Review</Button>

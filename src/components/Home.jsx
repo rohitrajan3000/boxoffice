@@ -13,7 +13,7 @@ import Popular from "./Popular";
 import Toprated from "./Toprated";
 import Upcoming from "./Upcoming";
 
-
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -21,6 +21,10 @@ import Upcoming from "./Upcoming";
 
 
 export default function Home() {
+    const navigate = useNavigate()
+    const clickhandel=() => {
+        navigate('/Home');
+    }
 
    
     return (
@@ -43,7 +47,7 @@ export default function Home() {
             </Navbar>
             <Row>
                 <Container style={{ width: '7%',height:'90vh', backgroundColor: '#0F2167', color: 'white', padding: '20px' }}>
-                    <Button style={{ marginBottom: '10px', backgroundColor: '#512B81' }}><img src={homeimg} style={{ height: '30px' }} /></Button>
+                    <Button onClick={clickhandel} style={{ marginBottom: '10px', backgroundColor: '#512B81' }}><img src={homeimg} style={{ height: '30px' }} /></Button>
                     <Button style={{ marginBottom: '10px', backgroundColor: '#D4ADFC' }}><img src={profileimg} style={{ height: '30px' }} /></Button>
                     <Button style={{ marginBottom: '10px', backgroundColor: '#D4ADFC' }}><img src={reviewimg} style={{ height: '30px' }} /></Button>
                 </Container>
