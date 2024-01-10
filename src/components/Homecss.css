@@ -16,6 +16,15 @@
     }
     
  
-    .containersss::-webkit-scrollbar {
+  .containersss::-webkit-scrollbar {
       display: none;
-    }
+  }
+
+  .containerrrrr{
+    overflow-y: scroll; 
+
+  }
+  
+  .containerrrrr::-webkit-scrollbar {
+    display: none;
+  }

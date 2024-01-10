@@ -21,21 +21,24 @@ export default function SignUp() {
 
     const navigate = useNavigate();
 
-    async function handelLogin() {
-       
-         signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+    async function handelLogin() 
+    {
+
+        signInWithEmailAndPassword(auth, email, password).then((userCredential) => 
+        {
             const user = userCredential.user;
-            
+            console.log(userCredential.user)
+
         })
         navigate('/home')
-       
+
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 // ..
             });
 
-        
+            
 
     }
 

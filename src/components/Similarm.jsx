@@ -35,7 +35,7 @@ export default function Similarm() {
     const clickhandel = (movie) => {
 
         navigate('/Movie/' + movie.id, { state: movie });
-        window.location.reload();
+        window.location.reload(Similarm);
 
     }
     return (

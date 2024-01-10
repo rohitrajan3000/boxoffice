@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import AllReview from './components/AllReview';
 import Home from './components/Home';
 import Login from './components/Login';
 import Movie from './components/Movie';
@@ -22,6 +23,7 @@ function App() {
         <Route path='/signup' element={<SignUp />} />
         <Route path='/home' element={<Home />} />
         <Route path='/Movie/:id' element={< Movie />} />
+        <Route path='/allreview' element={< AllReview />} />
       </Routes>
 
     </div>
@@ -29,3 +31,6 @@ function App() {
 }
 
 export default App
+
+
+

@@ -20,7 +20,7 @@ export default function Popular(){
         })
 
     }, []);
-    const clickhandel = (movie) => {
+    const clickhandel = (movie) => { 
 
         navigate('/Movie/' + movie.id, { state: movie });
 
