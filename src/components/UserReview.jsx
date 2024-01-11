@@ -1,4 +1,3 @@
-import { collection, getDocs } from "firebase/firestore";
 import React from "react";
 import { Button, Row } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
@@ -8,16 +7,18 @@ import homeimg from '../assets/home.png';
 import reviewimg from '../assets/movie-reel.png';
 import '../components/Homecss.css';
 
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import logoimg from '../assets/logo.png';
 import { auth, db } from '../firebase';
-
 const IMAGE_API = 'https://image.tmdb.org/t/p/w500/';
 
 
 
-export default function AllReview() {
+
+
+export default function userReview() {
 
 
 
@@ -26,33 +27,47 @@ export default function AllReview() {
 
     const [movies, setMovies] = useState([]);
     const location = useLocation();
+    
+    
 
 
 
-
+   const {user,Movieid} = location.state;
+   
 
 
 
     useEffect(() => {
-        const fetchAllMovies = async () => {
-            try {
-                const collectionReference = collection(db, 'users'); // Replace 'users' with your collection name
-                const querySnapshot = await getDocs(collectionReference);
+        const firebaseFunction = async () => {
 
+            console.log(Movieid);
+
+
+
+            const collectionReference = collection(db, 'users');
+            const q = query(collectionReference, where("user", "==", user));
+
+            try {
+                const response = await getDocs(q);
                 const movieList = [];
-                querySnapshot.forEach((doc) => {
-                    // Each doc.data() contains a movie object, you can manipulate it as needed
-                    movieList.push(doc.data());
+
+                response.forEach((users) => {
+
+                    movieList.push(users.data());
+                    
                 });
+              
+
 
                 setMovies(movieList);
             } catch (error) {
-                console.error('Error fetching movies: ', error);
+                console.error("Error fetching movies: ", error);
             }
         };
 
-        fetchAllMovies();
+        firebaseFunction();
     }, []);
+    
 
     const navigate = useNavigate()
     const clickhandel = () => {
@@ -61,27 +76,19 @@ export default function AllReview() {
     }
     const allreview = () => {
         navigate('/allreview');
-       
+        
     }
     const profile=() => {   
         navigate('/profile');
         
     }
-    const handleUserClick = (userData) => {
-        navigate('/userReview', { state: userData });
-        
-    };
     const moviedetails =(userData)=>{
         navigate('/Movie/' + userData.id, { state: userData })
     }
+
+
     
-
-   
-   
-
-   
     
-
 
 
 
@@ -106,46 +113,41 @@ export default function AllReview() {
 
             </Navbar>
             <Row>
-                <Container style={{ width: '7%', height: '90vh', backgroundColor: '#0F2167', color: 'white', padding: '20px' }}>
+                <Container style={{ width: '7%', height: '90vh', backgroundColor:'#0F2167' , color: 'white', padding: '20px' }}>
                     <Button onClick={clickhandel} style={{ marginBottom: '10px', backgroundColor: '#D4ADFC' }}><img src={homeimg} style={{ height: '30px' }} /></Button>
-                    <Button onClick={allreview} style={{ marginBottom: '10px', backgroundColor: '#512B81' }}><img src={reviewimg} style={{ height: '30px' }} /></Button>
-                    <Button onClick={profile} style={{ marginBottom: '10px', backgroundColor: '#D4ADFC' }}><img src={profileimg} style={{ height: '30px' }} /></Button>
+                    <Button onClick={allreview} style={{ marginBottom: '10px', backgroundColor: '#512B81'  }}><img src={reviewimg} style={{ height: '30px' }} /></Button>
+                    <Button onClick={profile} style={{ marginBottom: '10px', backgroundColor:  '#D4ADFC'}}><img src={profileimg} style={{ height: '30px' }} /></Button>
                 </Container>
                 <Container className="containersss" style={{ width: '93%', height: '90vh', backgroundColor: '#200E3A', color: 'white', padding: '20px' }}>
-                    <h1>All Review</h1>
+
+                    <h2 style={{marginBottom:'20px'}}>User : {user}</h2>
                     <div className="movie-grid">
-
-
-
                         {movies.map((movie,index) => (
                             <div key={index} className="containersss" style={{ background: '#0F2167', marginBottom: '20px', width: '90%', padding: '15px', display: "flex", flexDirection: "column", borderRadius: '10px' }}>
                                 <Row>
                                     <Container style={{ width: '70%' }}>
                                         <h6 >{movie.review}</h6>
                                         <div style={{ display: "flex", flexDirection: 'column', marginTop: '5px', alignContent: 'baseline' }}>
-                                            <h5  onClick={() => handleUserClick( movie)}   style={{ marginRight: '10px',cursor:'pointer' }}><i>{movie.user}</i></h5>
+                                            <h5 style={{ marginRight: '10px', }}>{movie.user}</h5>
                                             <h5>User Rating : {movie.rating}</h5>
                                         </div>
 
-                                        </Container >
-                                        <Container style={{ width: '30%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                            <img onClick={() => moviedetails( movie)}  src={IMAGE_API + movie.poster_path} style={{ height: '200px' }} />
+                                    </Container >
+                                    <Container style={{ width: '30%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                        <img onClick={() => moviedetails( movie)}  src={IMAGE_API + movie.poster_path} style={{ height: '200px' }} />
 
-                                        </Container >
+                                    </Container >
 
-                                    </Row>
-
-                                    </div>
-                        ))}
+                                </Row>
 
                             </div>
+                        ))}
 
+                    </div>
                 </Container>
             </Row>
 
 
         </div>
-
     )
-    
 }

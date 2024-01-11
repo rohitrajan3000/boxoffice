@@ -2,7 +2,6 @@ import { default as React, useState } from "react";
 import { Card } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import '../components/Homecss.css';
-import { auth } from '../firebase';
 
 import axios from "axios";
 import { useEffect } from "react";
@@ -22,10 +21,10 @@ export default function NowPlaying(){
 
     }, []);
     const clickhandel = (movie) => {
-        const user = auth.currentUser.email;
+        
         
         navigate('/Movie/' + movie.id, { state: movie });
-        console.log(user)
+        
 
     }
     return(

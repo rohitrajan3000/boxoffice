@@ -6,7 +6,6 @@ import Button from 'react-bootstrap/Button';
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-
 import { auth } from '../firebase';
 
 
@@ -21,24 +20,23 @@ export default function SignUp() {
 
     const navigate = useNavigate();
 
-    async function handelLogin() 
-    {
 
-        signInWithEmailAndPassword(auth, email, password).then((userCredential) => 
-        {
+    async function handelLogin() {
+
+        signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
             const user = userCredential.user;
-            console.log(userCredential.user)
+            console.log(userCredential.user.email)
 
         })
-        navigate('/home')
-
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 // ..
             });
-
             
+            navigate(`/home`);
+        
+
 
     }
 

@@ -8,7 +8,7 @@ import homeimg from '../assets/home.png';
 import reviewimg from '../assets/movie-reel.png';
 import '../components/Homecss.css';
 
-import { addDoc, collection } from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 import { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
@@ -35,26 +35,45 @@ export default function Movie() {
 
 
     const navigate = useNavigate()
-    const handleClose = () => {
-        setShowDialog(false);
-        const firebaseFunction = async () => {
-            let user = auth.currentUser.email;
-            const documentRefrence = collection(db, "users")
-            addDoc(documentRefrence, {
-                user: user,
-                review: review,
-                rating: rating,
-                Movieid: id,
-            }).then(Response => {
-                console.log('data added')
-            }).catch(err => {
-                console.log(err)
-            })
-        }
-        firebaseFunction();
-        console.log(auth.currentUser.email)
-        
-    }
+    
+  const handleClose = () => {
+    setShowDialog(false);
+    const firebaseFunction = async () => {
+      let user = auth.currentUser.email;
+      function generateUniqueId() {
+        const timestamp = new Date().getTime();
+        const randomPart = Math.floor(Math.random() * 10000);
+        return `${timestamp}-${randomPart}`;
+      }
+      
+      // Example usage:
+      const uniqueId = generateUniqueId();
+      console.log(uniqueId);
+      const documentRefrence = collection(db, "users");
+
+      const docData = {
+        uniqueId:uniqueId,
+        user: user,
+        review: review,
+        rating: rating,
+        release_date: release_date,
+        id: id,
+        overview: overview,
+        poster_path: poster_path,
+        title: title,
+      };
+
+      try {
+        await setDoc(doc(documentRefrence, uniqueId.toString()), docData); // Assuming id is a string
+        console.log('Data added successfully');
+      } catch (error) {
+        console.error('Error adding data:', error);
+      }
+     
+    };
+
+    firebaseFunction();
+  };
     const handleShow = () => {
         setShowDialog(true);
         console.log(auth.currentUser.email)
@@ -66,6 +85,10 @@ export default function Movie() {
 
     const allreview=() => {   
         navigate('/allreview');
+        
+    }
+    const profile=() => {   
+        navigate('/profile');
         
     }
 
@@ -93,7 +116,7 @@ export default function Movie() {
                     <Button onClick={clickhandel} style={{ marginBottom: '10px', backgroundColor: '#512B81' }}><img src={homeimg} style={{ height: '30px' }} /></Button>
                     
                     <Button onClick={allreview} style={{ marginBottom: '10px', backgroundColor: '#D4ADFC' }}><img src={reviewimg} style={{ height: '30px' }} /></Button>
-                    <Button  style={{ marginBottom: '10px', backgroundColor: '#D4ADFC' }}><img src={profileimg} style={{ height: '30px' }} /></Button>
+                    <Button onClick={profile}  style={{ marginBottom: '10px', backgroundColor: '#D4ADFC' }}><img src={profileimg} style={{ height: '30px' }} /></Button>
 
                 </Container>
                 <Container className="containersss" style={{ width: '93%', height: '90vh', backgroundColor: '#200E3A', color: 'white', padding: '20px' }}>

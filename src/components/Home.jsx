@@ -29,6 +29,10 @@ export default function Home() {
         navigate('/allreview');
         
     }
+    const profile=() => {   
+        navigate('/profile');
+        
+    }
 
 
 
@@ -57,7 +61,7 @@ export default function Home() {
                     <Button onClick={clickhandel} style={{ marginBottom: '10px', backgroundColor: '#512B81' }}><img src={homeimg} style={{ height: '30px' }} /></Button>
                     <Button onClick={allreview} style={{ marginBottom: '10px', backgroundColor: '#D4ADFC' }}><img src={reviewimg} style={{ height: '30px' }} /></Button>
 
-                    <Button  style={{ marginBottom: '10px', backgroundColor: '#D4ADFC' }}><img src={profileimg} style={{ height: '30px' }} /></Button>
+                    <Button onClick={profile} style={{ marginBottom: '10px', backgroundColor: '#D4ADFC' }}><img src={profileimg} style={{ height: '30px' }} /></Button>
                 </Container>
                 <Container className="containersss"   style={{ width: '93%',height:'90vh',  backgroundColor: '#200E3A', color: 'white', padding: '20px' }}>
                    <NowPlaying/>
