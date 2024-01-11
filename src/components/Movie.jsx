@@ -122,7 +122,7 @@ export default function Movie() {
                 <Container className="containersss" style={{ width: '93%', height: '90vh', backgroundColor: '#200E3A', color: 'white', padding: '20px' }}>
                     <Row>
                         <Col style={{ margin: '10px', width: '50%' }} >
-                            <img src={IMAGE_API + poster_path} />
+                            <img style={{height:'500px'}} src={IMAGE_API + poster_path} />
                             <h1 style={{ marginTop: '20px', marginBottom: '20px' }}>{title}</h1>
                             <div>
                                 {overview}
@@ -130,13 +130,14 @@ export default function Movie() {
 
                             </div>
 
-                            <Button onClick={handleShow} style={{ marginTop: '20px', marginBottom: '20px' }}>Post Review</Button>
                             <Cast />
                             <Similarm />
 
 
                         </Col>
                         <Col>
+                        <Button onClick={handleShow} style={{ marginBottom: '20px', backgroundColor:'#D4ADFC',color:'black' }}>Post Review</Button>
+
                             <Modal show={showDialog} onHide={handleClose}>
                                 <Modal.Header closeButton>
                                     <Modal.Title>{title}</Modal.Title>

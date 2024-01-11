@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import AllReview from './components/AllReview';
+import Edit from './components/Edit';
 import Home from './components/Home';
 import Login from './components/Login';
 import Movie from './components/Movie';
@@ -28,6 +29,7 @@ function App() {
         <Route path='/allreview' element={< AllReview />} />
         <Route path='/profile' element={< Profile />} />
         <Route path='/userReview' element={<UserReview />} />
+        <Route path='/edit' element={<Edit />} />
       </Routes>
 
     </div>

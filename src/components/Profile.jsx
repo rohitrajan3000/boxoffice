@@ -1,22 +1,22 @@
-import React from "react";
+import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 import { Button, Row } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
+import { useLocation, useNavigate } from "react-router-dom";
 import profileimg from '../assets/account.png';
+import deleteimg from '../assets/bin.png';
 import editimg from '../assets/editing.png';
 import homeimg from '../assets/home.png';
+import logoimg from '../assets/logo.png';
+import star from '../assets/star.png';
+
 import reviewimg from '../assets/movie-reel.png';
 import '../components/Homecss.css';
-
-import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import logoimg from '../assets/logo.png';
 import { auth, db } from '../firebase';
 const IMAGE_API = 'https://image.tmdb.org/t/p/w500/';
 
 
-import { Modal } from 'react-bootstrap';
 
 
 
@@ -25,7 +25,7 @@ export default function Profile() {
 
 
 
-
+    const altText = 'Your Image';
 
 
     const [review, setReview] = useState();
@@ -89,13 +89,30 @@ export default function Profile() {
             console.log('data deleted')
         })
     }
-    const handleShow = () => {
-        setShowDialog(true);
-        console.log(auth.currentUser.email)
+    const handleShow = (movie) => {
+        navigate('/edit', { state: movie })
+        
     }
-    const handleClose = () => {
-        setShowDialog(false);
-    }
+
+
+
+    
+    const ImageComponent = ({ imageSrc, altText }) => (
+        <div>
+            <img style={{ height: '20px',marginRight:'10px' }} src={imageSrc} alt={altText} />
+        </div>
+    );
+    const PrintImages = ({ imageSrc, altText, count }) => {
+        const images = [];
+
+        for (let i = 0; i < count; i++) {
+            images.push(<ImageComponent key={i} imageSrc={imageSrc} altText={`${altText} ${i + 1}`} />);
+        }
+
+        return <div style={{display:'flex'}}>{images}</div>;
+    };
+
+    
 
     return (
         <div>
@@ -137,13 +154,17 @@ export default function Profile() {
                                     <Container style={{ width: '70%' }}>
                                         <h6 >{movie.review}</h6>
                                         <div style={{ display: "flex", flexDirection: 'column', marginTop: '5px', alignContent: 'baseline' }}>
-                                            <h5 style={{ marginRight: '10px', }}>{movie.user}</h5>
-                                            <h5>User Rating : {movie.rating}</h5>
+                                            <h5 style={{ marginRight: '10px', }}>User : {movie.user}</h5>
+                                            
+                                            <div style={{ display: 'flex' }}>
+                                                <PrintImages imageSrc={star} altText={altText} count={movie.rating} />
+                                            </div>
+
 
                                         </div>
                                         <div style={{ display: "flex", marginTop: '5px', alignContent: 'baseline' }}>
-                                            <Button onClick={() => deletereview(movie.uniqueId)}>delete</Button>
-                                            <Button onClick={handleShow}  style={{ marginRight: '10px', backgroundColor: '#D4ADFC', width: '50px' }}><img src={editimg} style={{ height: '25px' }} /></Button>
+                                            <Button onClick={() => deletereview(movie.uniqueId)}  style={{ marginRight: '10px', backgroundColor: '#D4ADFC', width: '50px' }}><img src={deleteimg} style={{ height: '25px' }} /></Button>
+                                            <Button onClick={() =>handleShow(movie)}  style={{ marginRight: '10px', backgroundColor: '#D4ADFC', width: '50px' }}><img src={editimg} style={{ height: '25px' }} /></Button>
                                         </div>
 
 
@@ -163,22 +184,7 @@ export default function Profile() {
                     </div>
 
                 </Container>
-                <Modal show={showDialog} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>hhh</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <textarea placeholder="Write Your Review" style={{ width: '100%', height: '150px', border: 'none' }} onChange={(e) => setReview(e.currentTarget.value)} />
-                        Rating <input style={{ width: '40px', border: 'none' }} type="number" onChange={(e) => setRating(e.currentTarget.value)} /> outoff 5
-
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button onClick={handleClose}>
-                            Submit
-                        </Button>
-                        {/* Add other buttons or actions as needed */}
-                    </Modal.Footer>
-                </Modal>
+                
                 
             </Row>
 

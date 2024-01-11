@@ -26,7 +26,7 @@ export default function SignUp() {
             const user = userCredential.user;
 
         })
-        navigate('/home')
+        navigate('/login')
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;

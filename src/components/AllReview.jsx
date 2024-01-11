@@ -6,6 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import profileimg from '../assets/account.png';
 import homeimg from '../assets/home.png';
 import reviewimg from '../assets/movie-reel.png';
+import star from '../assets/star.png';
 import '../components/Homecss.css';
 
 import { useEffect, useState } from "react";
@@ -30,6 +31,7 @@ export default function AllReview() {
 
 
 
+    const altText = 'Your Image';
 
 
 
@@ -76,6 +78,20 @@ export default function AllReview() {
     }
     
 
+    const ImageComponent = ({ imageSrc, altText }) => (
+        <div>
+            <img style={{ height: '20px',marginRight:'10px' }} src={imageSrc} alt={altText} />
+        </div>
+    );
+    const PrintImages = ({ imageSrc, altText, count }) => {
+        const images = [];
+
+        for (let i = 0; i < count; i++) {
+            images.push(<ImageComponent key={i} imageSrc={imageSrc} altText={`${altText} ${i + 1}`} />);
+        }
+
+        return <div style={{display:'flex'}}>{images}</div>;
+    };
    
    
 
@@ -123,8 +139,11 @@ export default function AllReview() {
                                     <Container style={{ width: '70%' }}>
                                         <h6 >{movie.review}</h6>
                                         <div style={{ display: "flex", flexDirection: 'column', marginTop: '5px', alignContent: 'baseline' }}>
-                                            <h5  onClick={() => handleUserClick( movie)}   style={{ marginRight: '10px',cursor:'pointer' }}><i>{movie.user}</i></h5>
-                                            <h5>User Rating : {movie.rating}</h5>
+                                            <h5  onClick={() => handleUserClick( movie)}   style={{ marginRight: '10px',cursor:'pointer' }}>User : <i>{movie.user}</i></h5>
+                                            
+                                            <div style={{ display: 'flex' }}>
+                                                <PrintImages imageSrc={star} altText={altText} count={movie.rating} />
+                                            </div>
                                         </div>
 
                                         </Container >
